@@ -1,26 +1,37 @@
-" use python3
-if exists('py2') && has('python')
-elseif has('python3')
-endif
+"use python3
+ if exists('py2') && has('python')
+    elseif has('python3')
+ endif
 
-" Vundle -----------------------------------------------------------------------
+ " Vundle
+ " -----------------------------------------------------------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+ " set the runtime path to include Vundle and initialize
+"set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=$HOME/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'xavierd/clang_complete'
 Plugin 'yegappan/taglist.git'
 Plugin 'jsfaint/gen_tags.vim.git'
-call vundle#end()            " required
-" Vundle -----------------------------------------------------------------------
+Plugin 'Syntastic'
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgut'
+Plugin 'dense-analysis/ale.git'
+""Plugin 'ycm-core/YouCompleteMe.git'
+Plugin 'neoclide/coc-tabnine.git'
 
-" file type and syntax highliting on
+call vundle#end()            " required
+ "  " Vundle
+ "  -----------------------------------------------------------------------
+ "
+ "  " file type and syntax highliting on
 filetype plugin indent on
 syntax on
 
@@ -30,9 +41,10 @@ highlight ExtraWhitespace ctermbg=cyan guibg=cyan
 autocmd InsertLeave * redraw!
 match ExtraWhitespace /\s\+$\| \+\ze\t/
 autocmd BufWritePre * :%s/\s\+$//e
+colorscheme industry
 
 " color scheme
-color leet2
+""""""""color leet2
 
 " sessions
 noremap <F1> :mksession! .vim.session <cr>
@@ -43,7 +55,7 @@ noremap <F3> :! rm .vim.session <cr>
 au FocusGained,BufEnter * :silent! !
 au FocusLost,WinLeave * :silent! w
 
-" specific settings
+ "  " specific settings
 set fo+=t
 set t_Co=256
 set nocursorline
@@ -58,8 +70,8 @@ set splitbelow
 set nomodeline
 set showcmd
 set showmatch
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 set cinoptions=(0,m1,:1
 set tw=80
@@ -80,7 +92,11 @@ set foldmethod=marker
 set ttyfast
 set history=10000
 set hidden
-set colorcolumn=81
+""""set colorcolumn=81
+""""set colorcolumn=81,+20
+set colorcolumn=101
+""""highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+highlight ColorColumn ctermbg=grey guibg=grey
 set number
 set mouse=a
 set complete=.,w,b,u,t
@@ -89,11 +105,18 @@ set noswapfile
 set foldlevelstart=0
 set wildmenu
 set wildmode=list:longest,full
+"" set list
+"set listchars=eol:⏎,tab:␉·,trail:␠,nbsp:⎵
+"set listchars=tab:>-
+set clipboard=unnamedplus
 set nowrap
 set statusline=%{getcwd()}\/\%f%=%-14.(%l,%c%V%)\ %P
 set autoread
 set conceallevel=2
 set concealcursor=vin
+set cscopetag
+set csprg=gtags-cscope
+"set ctags=./tags,./TAGS ,tags,TAGS
 
 " backup
 set undodir=~/.vim/tmp/undo//
@@ -102,13 +125,13 @@ set directory=~/.vim/tmp/swap//
 
 " make directories automatically if they don't already exist
 if !isdirectory(expand(&undodir))
-    call mkdir(expand(&undodir), "p")
+call mkdir(expand(&undodir), "p")
 endif
 if !isdirectory(expand(&backupdir))
-    call mkdir(expand(&backupdir), "p")
+call mkdir(expand(&backupdir), "p")
 endif
 if !isdirectory(expand(&directory))
-    call mkdir(expand(&directory), "p")
+call mkdir(expand(&directory), "p")
 endif
 
 " close brackets
@@ -120,7 +143,7 @@ endif
 :inoremap ' ''<Esc>i
 :inoremap ` ``<Esc>i
 
-" cursorline
+ " cursorline
 au WinLeave * set nocursorline
 au WinEnter * set cursorline
 set cursorline
@@ -142,4 +165,5 @@ let g:clang_complete_optional_args_in_snippets = 1
 " jedi
 let g:jedi#completions_enabled = 1
 let g:jedi#force_py_version = 3
-" Done
+cs add GTAGS
+""""cs add cscope.out
