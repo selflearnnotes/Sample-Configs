@@ -9,7 +9,7 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
- " set the runtime path to include Vundle and initialize
+" set the runtime path to include Vundle and initialize
 "set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=$HOME/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -166,6 +166,9 @@ au WinEnter * set cursorline
 set cursorline
 
 " clang stuff
+" for libclang.so not found error, find or install libclang-dev and create a
+" soft link for libclang.so.1 and add the path to .so directory in the below
+" line
 let g:clang_library_path='/usr/lib/'
 let g:clang_user_options='|| exit 0'
 let g:clang_complete_auto = 0
