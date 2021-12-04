@@ -1,0 +1,174 @@
+conky.config = {
+-- UBUNTU-CONKY
+-- A comprehensive conky script, configured for use on
+-- Ubuntu / Debian Gnome, without the need for any external scripts.
+
+-- Based on conky-jc and the default .conkyrc.
+-- INCLUDES:
+-- - tail of /var/log/messages
+-- - netstat connections to your computer
+
+-- hda1:  ${fs_free_perc /media/hda1}%   ${fs_bar 6 /media/hda1}$color
+-- hdb3:  ${fs_free_perc /media/hdb3}%   ${fs_bar 6 /media/hdb3}
+
+
+-- Create own window instead of using desktop (required in nautilus)
+--own_window_class Conky
+	own_window_type = 'normal',
+--own_window_type desktop
+	own_window = true,
+	own_window_colour = 'black',
+--own_window_type override
+--own_window_type normal
+--own_window_type transparent
+--own_window_type desktop
+	own_window_argb_visual = true,
+	own_window_argb_value = 90,
+--own_window_transparent yes
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+-- Use double buffering (reduces flicker, may not work for everyone)
+	double_buffer = true,
+	total_run_times = 0,
+
+-- fiddle with window
+	use_spacer = 'left',
+--use_spacer yes
+	use_xft = false,
+
+-- Update interval in seconds
+	update_interval = 4.0,
+
+-- Minimum size of text area
+-- minimum_size 250 5
+
+-- Draw shades?
+	draw_shades = false,
+
+-- Text stuff
+	draw_outline = false,-- amplifies text if yes
+	draw_borders = false,
+	font = 'arial:size=4',
+--font sans-serif:bold:size=5
+	uppercase = false,-- set to yes if you want all text to be in uppercase
+
+-- Stippled borders?
+	stippled_borders = 0,
+
+-- border margins
+	border_margin = '9',
+
+-- border width
+	border_width = 10,
+
+-- Default colors and also border colors, grey90 == #e5e5e5
+	default_color = 'grey',
+
+--own_window_colour brown
+	own_window_colour = 'black',
+	own_window_transparent = true,
+
+-- Text alignment, other possible values are commented
+--alignment top_left
+	alignment = 'top_right',
+--alignment bottom_left
+--alignment bottom_right
+--alignment top_middle
+
+-- Gap between borders of screen and text
+	gap_x = 10,
+	gap_y = 5,
+
+-- stuff after 'TEXT' will be formatted on screen
+
+};
+
+conky.text = [[
+$color
+#${font sans-serif:bold:size=5}
+${color orange}SYSTEM ${hr 2}$color
+$nodename $sysname $kernel on $machine
+${color orange}CPU ${hr 2}$color
+Freq: ${freq}MHz Load: ${loadavg} Temp: ${acpitemp}C
+Uptime: ${uptime} RAM: ${mem}  /  ${memmax}
+${color yellow} $cpubar ${color}
+#${cpugraph 000000 ffffff}
+${color violet}${cpugraph 15,0 -t} ${color}
+${font sans-serif:normal:size=5}${color white}CPU Core History: ${font sans-serif:normal:size=5}${color FC3904}
+${font sans-serif:normal:size=5}${color white}CPU1: ${font sans-serif:normal:size=5}${color blue}${cpu cpu1} % ${cpubar cpu1}
+${font sans-serif:normal:size=5}${color white}CPU2: ${font sans-serif:normal:size=5}${color blue}${cpu cpu2} % ${cpubar cpu2}
+${font sans-serif:normal:size=5}${color white}CPU3: ${font sans-serif:normal:size=5}${color blue}${cpu cpu3} % ${cpubar cpu3}
+${font sans-serif:normal:size=5}${color white}CPU4: ${font sans-serif:normal:size=5}${color blue}${cpu cpu4} % ${cpubar cpu4}
+${font sans-serif:normal:size=5}${color white}CPU5: ${font sans-serif:normal:size=5}${color blue}${cpu cpu5} % ${cpubar cpu5}
+${font sans-serif:normal:size=5}${color white}CPU6: ${font sans-serif:normal:size=5}${color blue}${cpu cpu6} % ${cpubar cpu6}
+${font sans-serif:normal:size=5}${color white}CPU7: ${font sans-serif:normal:size=5}${color blue}${cpu cpu7} % ${cpubar cpu7}
+${font sans-serif:normal:size=5}${color white}CPU8: ${font sans-serif:normal:size=5}${color blue}${cpu cpu8} % ${cpubar cpu8}
+#CPU1: ${cpu cpu1} % ${cpubar cpu1}
+#CPU2: ${cpu cpu2} % ${cpubar cpu2}
+#CPU3: ${cpu cpu3} % ${cpubar cpu3}
+#CPU4: ${cpu cpu4} % ${cpubar cpu4}
+#CPU5: ${cpu cpu5} % ${cpubar cpu5}
+#CPU6: ${cpu cpu6} % ${cpubar cpu6}
+#CPU7: ${cpu cpu7} % ${cpubar cpu7}
+#CPU8: ${cpu cpu8} % ${cpubar cpu8}
+${color orange}
+NAME             PID       CPU%      MEM% ${color}
+${top name 1} ${top pid 1}   ${top cpu 1}    ${top mem 1}
+${top name 2} ${top pid 2}   ${top cpu 2}    ${top mem 2}
+${top name 3} ${top pid 3}   ${top cpu 3}    ${top mem 3}
+${top name 4} ${top pid 4}   ${top cpu 4}    ${top mem 4}
+${color orange}MEMORY / DISK ${hr 2}$color
+RAM:   $memperc%   ${color green}${membar 6}$color
+Swap:  $swapperc%  ${color red}${swapbar 6}$color
+
+root:  ${fs_free_perc /}%      ${fs_bar 6 /}    $color
+usr :  ${fs_free_perc /usr}%   ${fs_bar 6 /usr} $color
+var :  ${fs_free_perc /var}%   ${fs_bar 6 /var} $color
+home:  ${fs_free_perc /home}%  ${fs_bar 6 /home}$color
+
+${color orange}INTERNET(${color red}${exec curl ifconfig.me}${color orange})${color orange}${hr 2}$color
+#${color orange}WIRED (${addr bond0}) ${hr 2}$color
+#Down: $color${downspeed bond0} k/s ${alignr}Up: ${upspeed bond0} k/s
+#${downspeedgraph bond0 15,140 000000 ff0000} ${alignr}${upspeedgraph bond0
+#15,140 000000 00ff00}$color
+#Total: ${totaldown bond0} ${alignr}Total: ${totalup bond0}
+#Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768
+#61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}
+
+${color orange}WIRED (${addr enp6s0}) ${hr 2}$color
+Down: $color${downspeed enp6s0} k/s ${alignr}Up: ${upspeed enp6s0} k/s
+${downspeedgraph enp6s0 15,140 000000 ff0000} ${alignr}${upspeedgraph enp6s0
+15,140 000000 00ff00}$color
+Total: ${totaldown enp6s0} ${alignr}Total: ${totalup enp6s0}
+Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768
+61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}
+
+${color orange}WIRED (${addr enp4s6}) ${hr 2}$color
+Down: $color${downspeed enp4s6} k/s ${alignr}Up: ${upspeed enp4s6} k/s
+${downspeedgraph enp4s6 15,140 000000 ff0000} ${alignr}${upspeedgraph enp4s6
+15,140 000000 00ff00}$color
+Total: ${totaldown enp4s6} ${alignr}Total: ${totalup enp4s6}
+Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768
+61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}
+
+${color orange}WLAN (${addr wlp0s18f2u5}) ${hr 2}$color
+Down: $color${downspeed wlp0s18f2u5} k/s ${alignr}Up: ${upspeed wlp0s18f2u5} k/s
+${downspeedgraph wlp0s18f2u5 15,140 000000 ff0000} ${alignr}${upspeedgraph wlp0s18f2u5
+15,140 000000 00ff00}$color
+Total: ${totaldown wlp0s18f2u5} ${alignr}Total: ${totalup wlp0s18f2u5}
+Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768
+61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}
+
+${color orange}WLAN (${addr wlp0s19f2u5}) ${hr 2}$color
+Down: $color${downspeed wlp0s19f2u5} k/s ${alignr}Up: ${upspeed wlp0s19f2u5} k/s
+${downspeedgraph wlp0s19f2u5 15,140 000000 ff0000} ${alignr}${upspeedgraph wlp0s19f2u5
+15,140 000000 00ff00}$color
+Total: ${totaldown wlp0s19f2u5} ${alignr}Total: ${totalup wlp0s19f2u5}
+Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768
+61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}
+
+${color orange}LOGGING ${hr 2}$color
+#${execi 60 tail -n3 /var/log/syslog | fold -w50}
+${execi 60 cat /var/log/syslog | tail -n5 | fold -s -w50}
+
+]];
