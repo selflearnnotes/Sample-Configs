@@ -2,3 +2,4 @@
 vimrc sample
 screenrc
 conkyrc
+bash_aliases
