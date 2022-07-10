@@ -104,3 +104,19 @@ NOW=$(date +"%c")
 #echo $NOW | lolcat
 #cat /home/$USER/todo.txt | lolcat
 [ -r /home/$USER/.byobu/prompt ] && . /home/$USER/.byobu/prompt   #byobu-prompt#
+
+function build_cscope_ctags_db_func() {
+    local PROJDIR=$PWD
+    cd /
+    echo "Searching cscope ... ctags files.."
+    find $PROJDIR -name '*.c' -o -name '*.h' > $PROJDIR/cscope.files
+    cd $PROJDIR
+    echo "cscope db starting..."
+    cscope -Rbq
+    echo "cscope db done..."
+    echo "ctags db starting..."
+    ctags -B -L cscope.files
+    echo "ctags db done..."
+}
+alias csbuild='time build_cscope_ctags_db_func'
+
